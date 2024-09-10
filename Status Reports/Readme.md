@@ -11,9 +11,9 @@ Status Report Fall Week XX.md is a template for to copy-paste into new Status re
 
 | Document | Tasks | Accomplishments | Issues |
 |---|---|---|---|
-| Week 1 Status Report | We've accomplished a lot | We'll accomplish even more | No problems to report! |
-| Week 2 Status Report | | | |
-| Week 3 Status Report | | | |
+| Week 1 Status Report | Getting to know each other. | We organized a discord server to communicate easily. | No problems to report! |
+| Week 2 Status Report | Creating our team contract. | We fullfilled most of the contract. | We needed some input from our advisor. |
+| Week 3 Status Report | Have our first meeting with our advisor/sponsor | We set up a weekly zoom meet up with our advisor, filling the rest of the team contract. | No problems to report! |
 | Week 4 Status Report | | | |
 | Week 5 Status Report | | | |
 | Week 6 Status Report | | | |
