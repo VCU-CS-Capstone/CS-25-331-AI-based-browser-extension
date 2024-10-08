@@ -16,8 +16,8 @@ Status Report Fall Week XX.md is a template for to copy-paste into new Status re
 | Week 3 Status Report | Have our first meeting with our advisor/sponsor. | We set up a weekly zoom meet up with our advisor, filling the rest of the team contract. | No problems to report! |
 | Week 4 Status Report | No immediate task for this week. | We received a few files from our advisor to learn more about our project. | No problems to report! |
 | Week 5 Status Report | Start building our project proposal template, with section A to C going first. | No accomplishments this week. | No problems to report! |
-| Week 6 Status Report | | | |
-| Week 7 Status Report | | | |
+| Week 6 Status Report | Continuous work on the project proposal. | Work proceeding smoothly. | No problems to report! |
+| Week 7 Status Report | Continuous work on the project proposal. | Work proceeding smoothly. | No problems to report! |
 | Week 8 Status Report | | | |
 | Week 9 Status Report | | | |
 | Week 10 Status Report | | | |
