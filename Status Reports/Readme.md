@@ -18,12 +18,12 @@ Status Report Fall Week XX.md is a template for to copy-paste into new Status re
 | Week 5 Status Report | Start building our project proposal template, with section A to C going first. | No accomplishments this week. | No problems to report! |
 | Week 6 Status Report | Continuous work on the project proposal. | Work proceeding smoothly. | No problems to report! |
 | Week 7 Status Report | Continuous work on the project proposal. | Work proceeding smoothly. | No problems to report! |
-| Week 8 Status Report | | | |
-| Week 9 Status Report | | | |
-| Week 10 Status Report | | | |
-| Week 11 Status Report | | | |
-| Week 12 Status Report | | | |
-| Week 13 Status Report | | | |
+| Week 8 Status Report | Checking for fall poster ideas. | project proposal has been turned in. | No problems to report! |
+| Week 9 Status Report | Most create slides with gathered information for our advisor. | No major accomplishments this week. | No problems to report! |
+| Week 10 Status Report | Nothing at the moment, focus on midterms and the like! | We showed our advisor the slides about a few APIs we could use for the project. | No problems to report! |
+| Week 11 Status Report | Team is to discuss the poster once more. | No major accomplishments, team focusing on midterms. | No problems to report! |
+| Week 12 Status Report | By next week, our poster should be completed. | We decided on the layout necessary for our poster. | No problems to report! |
+| Week 13 Status Report | Finish polishing the poster before friday. | We got started with the embedding code for our project. | No problems to report! |
 | Week 14 Status Report | | | |
 | Week 15 Status Report | | | |
 | Week 16 Status Report | | | |
