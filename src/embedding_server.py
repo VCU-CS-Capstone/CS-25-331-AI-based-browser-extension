@@ -9,7 +9,14 @@ app = Flask(__name__)
 # Load the embedding model
 print("Loading the model...")
 embedder = pipeline("feature-extraction", model="sentence-transformers/all-MiniLM-L6-v2")
+tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
 print("Model loaded successfully!")
+
+def chunk_text_by_tokens(text, max_tokens=256):
+    """Splits text into chunks based on token count."""
+    tokens = tokenizer.encode(text, add_special_tokens=False)
+    chunks = [tokens[i : i + max_tokens] for i in range(0, len(tokens), max_tokens)]
+    return [tokenizer.decode(chunk) for chunk in chunks]
 
 @app.route("/")
 def home():
@@ -24,16 +31,20 @@ def generate_embeddings():
         if not sentence:
             return jsonify({"error": "No sentence provided"}), 400
 
+        # Split text into chunks
+        chunks = chunk_text_by_tokens(text, max_tokens=256)
+
         # Generate embeddings
         print(f"Generating embeddings for: {sentence}")
-        embeddings = embedder(sentence)
+        embeddings = [embedder(chunk)[0] for chunk in chunks]
 
         # Convert embeddings to plain arrays
-        plain_embeddings = (
-            embeddings[0] if isinstance(embeddings, list) and len(embeddings) > 0 else embeddings
-        )
+        plain_embeddings = [
+            emb[0] if isinstance(emb, list) and len(emb) > 0 else emb
+            for emb in embeddings
+        ]
 
-        return jsonify({"embeddings": plain_embeddings})
+        return jsonify({"embeddings": plain_embeddings, "chunks": chunks})
     except Exception as e:
         print(f"Error generating embeddings: {e}")
         return jsonify({"error": str(e)}), 500
