@@ -1,7 +1,7 @@
 # Run python embedding_server.py then go to http://127.0.0.1:8080
 
 from flask import Flask, request, jsonify
-from transformers import pipeline
+from transformers import pipeline, AutoTokenizer
 
 # Initialize the Flask app
 app = Flask(__name__)
