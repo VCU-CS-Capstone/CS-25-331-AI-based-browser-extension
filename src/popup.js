@@ -1,54 +1,50 @@
-// Function to scrape and collect text content from the current tab
-function scrapePageContent() {
-    return new Promise((resolve, reject) => {
-        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const tabId = tabs[0].id;
-
-            chrome.scripting.executeScript(
-                {
-                    target: { tabId: tabId },
-                    func: () => {
-                        // Select all human-readable elements
-                        const elements = document.querySelectorAll("p, h1, h2, h3, div, span");
-                        const texts = [];
-
-                        elements.forEach((el) => {
-                            // Extract text, trim whitespace, and ignore empty content
-                            const text = el.innerText.trim();
-                            if (text) texts.push(text);
-                        });
-
-                        return texts.join(" ");
-                    },
-                },
-                (results) => {
-                    if (chrome.runtime.lastError) {
-                        reject(chrome.runtime.lastError.message);
-                    } else if (results && results[0] && results[0].result) {
-                        resolve(results[0].result);
-                    } else {
-                        reject("Failed to scrape content.");
-                    }
-                }
-            );
-        });
-    });
-}
-
-// Event listener to test scraping functionality
-document.getElementById("testScrape").addEventListener("click", async () => {
+document.getElementById("scrapeAndSend").addEventListener("click", async () => {
     const statusElement = document.getElementById("status");
-    statusElement.textContent = "Scraping the current page...";
+    statusElement.textContent = "Scraping webpage content...";
 
     try {
-        // Call the scrapePageContent function
-        const pageText = await scrapePageContent();
-        console.log("Scraped text content:", pageText);
+        // Get the active tab and its URL
+        let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
 
-        // Update the status
-        statusElement.textContent = "Scraping completed! Check console for the text.";
+        if (!tab || !tab.url) {
+            throw new Error("No active tab or URL found.");
+        }
+
+        let pageUrl = tab.url;  // Extract URL
+        console.log("Page URL:", pageUrl);
+
+        // Inject script to scrape text
+        let scrapedText = await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            func: () => document.body.innerText // Extracts human-readable text
+        });
+
+        if (!scrapedText || !scrapedText[0] || !scrapedText[0].result) {
+            throw new Error("Failed to scrape webpage content.");
+        }
+
+        let textContent = scrapedText[0].result;
+        console.log("Scraped text:", textContent);
+
+        statusElement.textContent = "Sending text and URL to server for embedding...";
+
+        // Send the text + URL to the embedding server
+        let response = await fetch("http://127.0.0.1:8080/generate_embeddings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: textContent, url: pageUrl }),  // Include URL
+        });
+
+        let result = await response.json();
+
+        if (response.ok) {
+            console.log("Chunks received from server:", result.chunks);
+            statusElement.textContent = "Embeddings stored successfully!";
+        } else {
+            throw new Error(result.error || "Failed to process text.");
+        }
     } catch (error) {
-        console.error("Error during scraping:", error);
-        statusElement.textContent = "Error scraping the page. Check console.";
+        console.error("Error:", error);
+        statusElement.textContent = "Error: " + error.message;
     }
 });
