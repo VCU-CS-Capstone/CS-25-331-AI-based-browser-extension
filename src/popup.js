@@ -48,3 +48,51 @@ document.getElementById("scrapeAndSend").addEventListener("click", async () => {
         statusElement.textContent = "Error: " + error.message;
     }
 });
+
+document.getElementById("askQuestion").addEventListener("click", async () => {
+    const question = document.getElementById("questionInput").value.trim();
+    const resultsDiv = document.getElementById("results");
+    resultsDiv.innerHTML = "";
+
+    if (!question) {
+        resultsDiv.textContent = "Please enter a question.";
+        return;
+    }
+
+    try {
+        const response = await fetch("http://127.0.0.1:8080/query", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ question })
+        });
+
+        const data = await response.json();
+        if (data.matches && data.matches.length > 0) {
+            const seenUrls = new Set();
+        
+            data.matches.forEach(match => {
+                if (seenUrls.has(match.url)) return;
+                seenUrls.add(match.url);
+            
+                const link = document.createElement("a");
+                link.href = match.url;
+                link.textContent = `${match.url} (score: ${match.score})`;
+                link.target = "_blank";
+            
+                const snippet = document.createElement("p");
+                snippet.textContent = match.text;
+                snippet.style.fontSize = "0.9em";
+            
+                resultsDiv.appendChild(link);
+                resultsDiv.appendChild(snippet);
+                resultsDiv.appendChild(document.createElement("hr"));
+            });            
+        } else {
+            resultsDiv.textContent = "No matching information found.";
+        }
+    } catch (error) {
+        resultsDiv.textContent = "Error: " + error.message;
+    }
+});

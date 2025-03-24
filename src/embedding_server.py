@@ -6,7 +6,7 @@ import re
 app = Flask(__name__)
 
 # Initialize embedding model
-model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
+model = SentenceTransformer("sentence-transformers/multi-qa-MiniLM-L6-cos-v1")
 
 # Initialize ChromaDB
 chroma_client = chromadb.PersistentClient(path="./chroma_db")
@@ -55,6 +55,44 @@ def generate_embeddings():
             )
 
         return jsonify({"chunks": chunks, "message": "Embeddings stored successfully"}), 200
+
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/query", methods=["POST"])
+def query_embeddings():
+    try:
+        data = request.json
+        question = data.get("question", "")
+
+        if not question:
+            return jsonify({"error": "No question provided"}), 400
+
+        # Embed the question
+        query_embedding = model.encode([question])[0]
+
+        # Ask for more results to filter duplicates
+        results = collection.query(
+            query_embeddings=[query_embedding],
+            n_results=10
+        )
+
+        matches = []
+        seen_urls = set()
+        for metadata, distance in zip(results["metadatas"][0], results["distances"][0]):
+            url = metadata["url"]
+            if url not in seen_urls:
+                seen_urls.add(url)
+                similarity = round(1 - distance, 4)  # Convert to similarity score
+                matches.append({
+                    "url": url,
+                    "text": metadata["text"],
+                    "score": similarity
+                })
+            if len(matches) >= 3:
+                break
+
+        return jsonify({"matches": matches}), 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
