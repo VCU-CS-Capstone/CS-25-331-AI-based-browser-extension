@@ -1,13 +1,17 @@
 {
-    "manifest_version": 3,
-    "name": "Webpage Scraper Extension",
-    "version": "1.0",
-    "description": "Scrapes human-readable text from a webpage.",
-    "permissions": ["activeTab", "scripting"],
-    "host_permissions": ["<all_urls>"],
-    "action": {
-      "default_popup": "popup.html",
-      "default_icon": "icon.png"
+  "manifest_version": 3,
+  "name": "Webpage Scraper Extension",
+  "version": "1.0",
+  "description": "Scrapes human-readable text from a webpage.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icon.png"
     }
+  },
+  "icons": {
+    "128": "icon.png"
   }
-  
+}
