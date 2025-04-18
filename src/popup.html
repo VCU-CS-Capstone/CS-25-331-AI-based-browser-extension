@@ -4,28 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Embedding Project Manager</title>
+  <link rel="stylesheet" href="popup.css"/>
   <script src="popup.js" defer></script>
 </head>
 <body>
-  <h2>Embedding Project Manager</h2>
+  <div class="container">
+    <h2>Embedding Project Manager</h2>
 
-  <label for="projectSelect"><strong>Select Project:</strong></label>
-  <select id="projectSelect"></select>
-  <br><br>
+    <label for="projectSelect">Select project</label>
+    <select id="projectSelect"></select>
 
-  <input type="text" id="newProjectInput" placeholder="New project name..." />
-  <button id="createProject">Create Project</button>
+    <label for="newProjectInput">New project</label>
+    <input 
+      type="text" 
+      id="newProjectInput" 
+      placeholder="Enter project name…" 
+    />
+    <button id="createProject">Create Project</button>
 
-  <hr>
+    <div class="spacer"></div>
 
-  <button id="scrapeAndSend">Scrape & Save Embeddings</button>
-  <p id="status">Status: Waiting...</p>
+    <button id="scrapeAndSend">Scrape &amp; Save Embeddings</button>
+    <p id="status">Status: Waiting…</p>
 
-  <hr>
+    <div class="spacer"></div>
 
-  <h3>Ask a Question</h3>
-  <input type="text" id="questionInput" placeholder="Enter your question..." style="width: 100%;" />
-  <button id="askQuestion">Ask</button>
-  <div id="results"></div>
+    <h3>Ask a Question</h3>
+    <input 
+      type="text" 
+      id="questionInput" 
+      placeholder="Enter your question…" 
+    />
+    <button id="askQuestion">Ask</button>
+    <div id="results"></div>
+  </div>
 </body>
 </html>
